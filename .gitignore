@@ -1,0 +1,10 @@
+﻿# Игнорируемые файлы
+build/
+out/
+*.class
+*.log
+*.jar
+.DS_Store
+.idea/
+*.iml
+.vscode/

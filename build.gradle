@@ -1,0 +1,52 @@
+plugins {
+    id 'java'
+}
+
+group = 'com.heroes_task'
+version = '1.0-SNAPSHOT'
+
+sourceSets {
+    main {
+        java {
+            srcDirs = ['src']
+        }
+    }
+    test {
+        java {
+            srcDirs = ['test']
+        }
+    }
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    // Локальная библиотека
+    implementation files('libs/heroes_task_lib-1.0-SNAPSHOT.jar')
+
+    // Тесты
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.9.2'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.9.2'
+}
+
+test {
+    useJUnitPlatform()
+}
+
+jar {
+    archiveBaseName = 'heroes_student_task'
+    archiveVersion = '1.0'
+
+    // Включаем зависимости в JAR
+    from {
+        configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) }
+    }
+
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+
+    manifest {
+        attributes 'Main-Class': 'com.heroes_task.programs.Main'
+    }
+}
